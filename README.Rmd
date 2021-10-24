@@ -22,10 +22,11 @@ The goal of nsSNPfinder is to ...
 
 ## Installation
 
-You can install the development version of nsSNPfinder like so:
+You can install the development version of nsSNPfinder from [GitHub](https://github.com/) with:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# install.packages("devtools")
+devtools::install_github("Yuewei-Wang/nsSNPfinder")
 ```
 
 ## Example
