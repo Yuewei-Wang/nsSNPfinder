@@ -10,10 +10,14 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown
+biocViews: 
+    SNPlocs.Hsapiens.dbSNP144.GRCh38
 Imports: 
     bio3d,
-    biomaRt,
-    BSgenome,
-    SNPlocs.Hsapiens.dbSNP144.GRCh38
+    biomartr
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 3.1.0)
