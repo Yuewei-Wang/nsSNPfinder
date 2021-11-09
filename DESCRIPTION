@@ -1,23 +1,23 @@
 Package: nsSNPfinder
 Type: Package
-Title: What the Package Does (Title Case)
+Title: nsSNP postion finder and visualization
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: MIT + file LICENSE
+Author: person("Yuewei", "Wang", email="yuewei.wang@mail.utoronto.ca", role = c("aut", "cre"))
+Maintainer: Yuewei Wang <yuewei.wang@mail.utoronto.ca>
+Description: Integrate, analyze, and visualize the SNP data from the genomic level to the protein level. Find potential nsSNP-associated gene marker that might cause the protein structure change. 
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
-Suggests: 
-    testthat,
-    knitr,
-    rmarkdown
+Depends: R (>= 3.1.0)
 biocViews: 
     SNPlocs.Hsapiens.dbSNP144.GRCh38
 Imports: 
     bio3d,
     biomartr
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown
+License: MIT + file LICENSE
 Roxygen: list(markdown = TRUE)
-Depends: R (>= 3.1.0)
+RoxygenNote: 7.1.2
+URL: https://github.com/Yuewei-Wang/nsSNPfinder.git

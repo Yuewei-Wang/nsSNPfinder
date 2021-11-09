@@ -4,10 +4,12 @@
 # nsSNPfinder
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
-The goal of nsSNPfinder is to …
+nsSNPfinder is an R package for integrating, analyzing, and visualizing
+the SNP data from the genomic level to the protein level, finding
+potential nsSNP-associated gene marker that might cause the protein
+structure change.
 
 ## Installation
 
@@ -16,7 +18,22 @@ You can install the development version of nsSNPfinder from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("Yuewei-Wang/nsSNPfinder")
+require("devtools")
+devtools::install_github("Yuewei-Wang/nsSNPfinder"，build_vignettes = TRUE)
+library(nsSNPfinder)
+```
+
+To run the Shiny app:
+
+``` r
+runTestingPackage()
+```
+
+## Overview
+
+``` r
+ls("package:nsSNPfinder")
+data(package = "nsSNPfinder") # optional
 ```
 
 ## Example
