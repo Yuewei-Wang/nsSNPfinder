@@ -23,11 +23,7 @@ devtools::install_github("Yuewei-Wang/nsSNPfinder"，build_vignettes = TRUE)
 library(nsSNPfinder)
 ```
 
-To run the Shiny app:
-
-``` r
-runTestingPackage()
-```
+To run the shinyApp: Under construction
 
 ## Overview
 
@@ -36,38 +32,59 @@ ls("package:nsSNPfinder")
 data(package = "nsSNPfinder") # optional
 ```
 
-## Example
+nsSNPfinder contains 4 functions to demonstrate the nsSNP distribution
+in certain H. sapiens gene and address the protein structure of the
+gene.
 
-This is a basic example which shows you how to solve a common problem:
+The *nsSNPCalculatebyRange* function calculates the percentage of
+residues involving nsSNP event in the gene region.
+
+The *nsSNPFreqPlot* function generates the plot to indicate the position
+of nsSNP and frequency distribution within the certain gene region.
+
+The *SNPFreqPlot* function generates the plot similar as *nsSNPFreqPlot*
+but the targets are all SNPs within the gene.
+
+The *3Dpdb* function displays the encoded-protein 3D structure record in
+PBD or UniProt, and highlight the residue positions involved nsSNPs.
 
 ``` r
-library(nsSNPfinder)
-## basic example code
+browseVignettes("nsSNPfinder")
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+## Contributions
 
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
+The author of the package is Yuewei Wang. The *nsSNPCalculatebyRange*
+function utilized the `SNPlocs.Hsapiens.dbSNP144.GRCh38` and
+`BSgenome.Hsapiens.UCSC.hg38` to obtain the initial information of SNP
+locations and human chromosome sequences. The `biomaRt` package is used
+for collecting the genomic sequences and type of variants.
+`GENETIC_CODE` function in `Biostrings` package is used for compare the
+codon, which contributes to find potential nsSNPs.
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/v1/examples>.
+The *nsSNPFreqPlot* and *SNPFreqPlot* functions use of map function from
+`ggplot2` R package to generate frequency plots. The `bio3d` R package
+is used for generating 3D protein strucuture of the gene.
 
-You can also embed plots, for example:
+## Reference
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+Durinck, S., Spellman, P., Birney, E.,& Huber, W. (2009). Mapping
+identifiers for the integration ofgenomic datasets with the
+R/Bioconductor package biomaRt. *Nature Protocols*, 4, 1184–1191.2.
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+Durinck, S., Moreau, Y., Kasprzyk, A., Davis, S., De Moor, B., Brazma,
+A.,& Huber, W. (2005).BioMart and Bioconductor: a powerful link between
+biological databases and microarray data analysis.*Bioinformatics*, 21,
+3439–3440.
+
+Grant, B.J., Rodrigues, A.P.C., ElSawy, K.M., McCammon, J.A.,& Caves,
+L.S.D. (2006). Bio3D: AnR package for the comparative analysis of
+protein structures. *Bioinformatics*, 22, 2695–2696.
+
+Pagès, H. (2017). SNPlocs.Hsapiens.dbSNP144.GRCh38: SNP locations for
+Homo sapiens (dbSNPBuild 144). R package version 0.99.20.
+
+## Acknowledgements:
+
+This package was developed as part of an assessment for 2021 BCB410H:
+Applied Bioinformatics, University of Toronto, Toronto, CANADA.

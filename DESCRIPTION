@@ -8,11 +8,13 @@ Description: Integrate, analyze, and visualize the SNP data from the genomic lev
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.1.0)
-biocViews: 
-    SNPlocs.Hsapiens.dbSNP144.GRCh38
 Imports: 
     bio3d,
-    biomartr
+    Biostrings,
+    biomaRt,
+    BSgenome,
+    SNPlocs.Hsapiens.dbSNP144.GRCh38,
+    BSgenome.Hsapiens.UCSC.hg38
 Suggests: 
     testthat,
     knitr,
