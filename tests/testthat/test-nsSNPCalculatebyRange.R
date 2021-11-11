@@ -12,7 +12,7 @@ test_that("approper arguments in chromosome 1", {
 
   expect_type(testResult, "list")
   expect_length(testResult, 4)
-  expect_s3_class(result, "data.frame")
+  expect_s3_class(testResult, "data.frame")
   expect_equal(testResult$gene_Name[1], "MORN1")
   expect_identical(trunc(testResult$lengths[1]), 70302)
   expect_identical(trunc(testResult$all_nssnps[1]), 3072)
