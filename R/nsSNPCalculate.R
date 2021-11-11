@@ -40,6 +40,10 @@
 #' biological databases and microarray data analysis.*Bioinformatics*,
 #' 21, 3439–3440.
 #'
+#' Pagès, H., Aboyoun, P., Gentleman, R., DebRoy, S. (2021). Biostrings:
+#' Efficient manipulation of biological strings. R package version 2.62.0,
+#'  https://bioconductor.org/packages/Biostrings.
+#'
 #' Pagès, H. (2017). SNPlocs.Hsapiens.dbSNP144.GRCh38: SNP locations for Homo
 #' sapiens (dbSNPBuild 144). R package version 0.99.20.
 #'
@@ -50,8 +54,6 @@
 #' @import SNPlocs.Hsapiens.dbSNP144.GRCh38
 #' @import BSgenome.Hsapiens.UCSC.hg38
 
-
-# 09 Nov 2021
 
 nsSNPCalculatebyRange <- function(chrName, start_position, end_position){
 
@@ -99,7 +101,9 @@ nsSNPCalculatebyRange <- function(chrName, start_position, end_position){
   gene_Name <- c()
   lengths <- c()
   for (i in 1:nrow(all_genes_Info)){
-    if (all_genes_Info$transcript_biotype[i] == 'protein_coding'){
+    if (all_genes_Info$transcript_biotype[i] == 'protein_coding' &&
+        all_genes_Info$transcript_start[i] >= start_position &&
+        all_genes_Info$transcript_end[i] <= end_position){
       pc <- c(pc, i)
       gene_Name <- c(gene_Name, all_genes_Info$hgnc_symbol[i])
       len <- all_genes_Info$transcript_end[i] - all_genes_Info$transcript_start[i] + 1
@@ -155,7 +159,7 @@ nsSNPCalculatebyRange <- function(chrName, start_position, end_position){
 
   percent <- c()
   for (i in 1:length(pc)){
-    percent <- append (percent, all_nssnps[i]/lengths[i])
+    percent <- append (percent, sprintf("%0.4f", all_nssnps[i]/lengths[i]))
   }
   # Combine all results and calculate the percentage
   result <- data.frame(gene_Name, lengths, all_nssnps, percent)
