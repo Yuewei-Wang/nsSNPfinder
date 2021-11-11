@@ -39,11 +39,13 @@ gene.
 The *nsSNPCalculatebyRange* function calculates the percentage of
 residues involving nsSNP event in the gene region.
 
-The *nsSNPFreqPlot* function generates the plot to indicate the position
-of nsSNP and frequency distribution within the certain gene region.
+The *SNPFreqPlot* function generates the plot to indicate the position
+distribution of SNPs within the certain gene region.
 
-The *SNPFreqPlot* function generates the plot similar as *nsSNPFreqPlot*
-but the targets are all SNPs within the gene.
+![](./inst/extdata/ExampleImage.png)
+
+The *nsSNPFreqPlot* function generates the plot similar as *SNPFreqPlot*
+but the targets are all nsSNPs within the gene.
 
 The *3Dpdb* function displays the encoded-protein 3D structure record in
 PBD or UniProt, and highlight the residue positions involved nsSNPs.
@@ -80,6 +82,9 @@ biological databases and microarray data analysis.*Bioinformatics*, 21,
 Grant, B.J., Rodrigues, A.P.C., ElSawy, K.M., McCammon, J.A.,& Caves,
 L.S.D. (2006). Bio3D: AnR package for the comparative analysis of
 protein structures. *Bioinformatics*, 22, 2695–2696.
+
+Pagès, H., Aboyoun, P., Gentleman, R., DebRoy, S. (2021). Biostrings:
+Efficient manipulation of biological strings. R package version 2.62.0.
 
 Pagès, H. (2017). SNPlocs.Hsapiens.dbSNP144.GRCh38: SNP locations for
 Homo sapiens (dbSNPBuild 144). R package version 0.99.20.
