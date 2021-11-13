@@ -1,30 +1,30 @@
-#' Generate a plot of SNP locations versus number of nucleotide
+#' Generate an overview plot for nsSNP locations versus number of nucleotide
 #' variants by gene range
 #'
-#' A function that integrate the information from bioMart and plot the
-#' SNP positions over the protein encoding range in
+#' A function that integrate the information from bioMart and plot the potential
+#' nsSNP positions over the protein encoding range in
 #' given chromosome, gene range (start coordinate, end coordinate).
 #' For better resolution, the genome range is limited within 200-nt length.
 #'
 #' @param chrName A integer value of class "numeric" indicating
-#'    the human chromosome 1-22, or a char either in 'X' or 'Y' indicating
+#'    the human chromosome 1-22, or a char either in 'X'or 'Y' indicating
 #'    human sex chromosome.
 #' @param start_position A positive integer indicating the starting coordinate
 #'    of gene range.
 #' @param end_position A positive integer indicating the end coordinate
 #'    of gene range.
 #'
-#' @return Returns a plot indicating the overview situation of SNPs
+#' @return Returns a plot indicating the overview potential nsSNPs
 #'
 #' @examples
 #' # The used dataset of SNPs is default from SNPlocs.Hsapiens.dbSNP144.GRCh38 package
 #' # The used dataset of Human genome is default from BSgenome.Hsapiens.UCSC.hg38 package
 #'
-#' # Generate the SNP locations in chromosome 1 in region of 2321253 to 2321453
-#' SNPplot <- SNPFreqPlot(chrName = 1,
-#'                        start_position = 2321253,
-#'                        end_position = 2321453)
-#' SNPplot
+#' # Generate the nsSNP locations in chromosome 1 in region of 2321253 to 2321353
+#' nsSNPPlot <- nsSNPFreqPlot(chrName = 1,
+#'                            start_position = 2321253,
+#'                            end_position = 2321353)
+#' nsSNPPlot
 #'
 #' @references
 #' Durinck, S., Spellman, P., Birney, E.,& Huber, W. (2009). Mapping identifiers
@@ -55,9 +55,9 @@
 #' @import BSgenome.Hsapiens.UCSC.hg38
 
 
-SNPFreqPlot <- function(chrName, start_position, end_position){
+nsSNPFreqPlot <- function(chrName, start_position, end_position){
 
-  # Checking arguments and the input range validation
+  # Checking argument validation and valid range
   num_chroms <- c(1:22)
   chr_chroms <- c('X','Y')
   if (typeof(chrName) == "character" && !chrName %in% chr_chroms) {
@@ -82,7 +82,7 @@ SNPFreqPlot <- function(chrName, start_position, end_position){
          within 200-length for better resolution.")
   }
 
-  # Set up appropriate mart for human genome from bioMart
+  # Set uo appropriate mart
   hsapiens <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl")
 
   # Query the information of transcripts and SNPs regarding the input range
@@ -94,7 +94,7 @@ SNPFreqPlot <- function(chrName, start_position, end_position){
                                   mart = hsapiens)
   all_chr_snp<-BSgenome::snpsBySeqname(SNPlocs.Hsapiens.dbSNP144.GRCh38, as.character(chrName))
 
-  # Filter out the sequence that not encoding with protein or exceeds the range
+  # Filter out the sequence that not encoding with protein
   snps <- c()
   for (i in 1:all_chr_snp@elementMetadata@nrows){
     if (all_chr_snp@ranges@pos[i] <= end_position &&
@@ -102,10 +102,6 @@ SNPFreqPlot <- function(chrName, start_position, end_position){
       snps <- append(snps, i)
     }
   }
-  if (length(snps) == 0){
-    stop("no SNPs involvoed in the input range.")
-  }
-
   pc <- c()
   gene_Name <- c()
   lengths <- c()
@@ -145,22 +141,59 @@ SNPFreqPlot <- function(chrName, start_position, end_position){
     pos <- all_chr_snp@ranges@pos[snps[i]]
     if (pos <= t_end && pos >= t_start){
       loc <-c(loc, all_chr_snp@ranges@pos[snps[i]])
+      local_idx <- pos-t_start+1
+      if (local_idx %% 3 == 0){
+        start <- local_idx - 2
+        end <- local_idx
+      } else{
+        if (local_idx %% 3 == 1){
+          start <- local_idx
+          end <- local_idx + 2
+        } else {
+          start <- local_idx - 1
+          end <- local_idx + 1
+        }
+      }
+      if (end > length(t_seq)){
+        break
+      }
       iupac <- unlist(strsplit(IUPAC_CODE_MAP[all_chr_snp
                                               @elementMetadata
-                                              $alleles_as_ambig[snps[i]]],""))
-      num_of_var <- c(num_of_var, length(iupac))
+                                              $alleles_as_ambig[snps[i]]],
+                               split=""))
+      ori_codon <- paste0(t_seq[start:end], collapse = "")
+      acc <- 0
+      for (k in 1:length(iupac)){
+        replaced_seq <- replace(t_seq, local_idx, iupac[k])
+        snp_codon <- paste0(replaced_seq[start:end], collapse = "")
+        if (Biostrings::GENETIC_CODE[ori_codon] != Biostrings::GENETIC_CODE[snp_codon]){
+          acc <- acc + 1
+        }
+      }
+      num_of_var <- c(num_of_var, acc)
     }
   }
+  # Check whether nsSNP present, if no any nsSNP, gives message to user
+  count <- 0
+  for (i in 1: length(num_of_var)){
+    if (num_of_var[i] > 0){
+      count <- count + 1
+    }
+  }
+  if (count == length(num_of_var)){
+    stop("no nsSNPs involvoed in the input range, you may re-define the range.")
+  }
+
 
   # Fill the information into the plot
   data <- data.frame(loc, num_of_var)
   plot<-ggplot(data = data,mapping = aes(x = loc, y = num_of_var),
-                 color=num_of_var,fill=num_of_var) +
+               color=num_of_var,fill=num_of_var) +
     geom_col(alpha=0.25) +
     geom_text(aes(label = loc),angle = 60, vjust = 0.25,
               size = 2.5, colour = "black") +
-    labs(x = "SNP location", y = "Count of different nts",
-         title = "SNP locations VS Number of variant nucleotides",
+    labs(x = "nsSNP location", y = "Count of different nts",
+         title = "nsSNP locations VS Number of variant nucleotides",
          subtitle = paste('Gene Name',gene_Name[cur_max],sep=": ")) +
     xlim(start_position, end_position) + ylim(c(0,4))
 

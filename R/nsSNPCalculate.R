@@ -5,7 +5,7 @@
 #' given chromosome, gene range (start coordinate, end coordinate).
 #'
 #' @param chrName A integer value of class "numeric" indicating
-#'    the human chromosome 1-22, or a char either in 'X'or 'Y' indicating
+#'    the human chromosome 1-22, or a char either in 'X' or 'Y' indicating
 #'    human sex chromosome.
 #' @param start_position A positive integer indicating the starting coordinate
 #'    of gene range.
@@ -14,7 +14,7 @@
 #'
 #' @return Returns a data frame object including the query and evaluated results
 #' \itemize{
-#'   \item gene_Name - A value of class "charracter" indicating the gene name
+#'   \item gene_Name - A value of class "character" indicating the gene name
 #'   \item lengths - A value of integer indicating the transcript length
 #'   \item all_nssnps - A value of class "numeric" indicating the nsSNP-involved
 #'    locations over the transcript
@@ -23,7 +23,10 @@
 #' }
 #'
 #' @examples
-#' # Calculates percentage of nsSNPs in chromosome 1gene range 2321253 to 2391707
+#' # The used dataset of SNPs is default from SNPlocs.Hsapiens.dbSNP144.GRCh38 package
+#' # The used dataset of Human genome is default from BSgenome.Hsapiens.UCSC.hg38 package
+#'
+#' # Calculates percentage of nsSNPs in chromosome 1 gene range 2321253 to 2391707
 #' nsSNPResults <- nsSNPCalculatebyRange(
 #'                           chrName = 1,
 #'                           start_position = 2321253,
@@ -77,19 +80,19 @@ nsSNPCalculatebyRange <- function(chrName, start_position, end_position){
          of class numeric.")
   }
 
-  # Set uo appropriate mart
+  # Set up appropriate mart to extract information of transcripts
   hsapiens <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl")
 
   # Query the information of transcripts and SNPs regarding the input range
   all_genes_Info <-biomaRt::getBM(attributes = c("hgnc_symbol","ensembl_gene_id",
                                         "transcript_start","transcript_end",
-                                        "transcript_biotype"),
+                                        "transcript_biotype","strand"),
                          filters = c('chromosome_name','start','end'),
                          values = list(chrName, start_position, end_position),
                          mart = hsapiens)
   all_chr_snp<-BSgenome::snpsBySeqname(SNPlocs.Hsapiens.dbSNP144.GRCh38, as.character(chrName))
 
-  # Filter out the sequence that not encoding with protein
+  # Filter out the query results that are not within the input range
   snps <- c()
   for (i in 1:all_chr_snp@elementMetadata@nrows){
     if (all_chr_snp@ranges@pos[i] <= end_position &&
@@ -110,6 +113,8 @@ nsSNPCalculatebyRange <- function(chrName, start_position, end_position){
       lengths <- c(lengths, len)
     }
   }
+
+  # No encoding protein, the query should terminate since no functional nsSNP at least
   if (length(pc) == 0){
     stop("no encoding protein involvoed in the input range, please re-enter another range.")
   }
@@ -123,7 +128,13 @@ nsSNPCalculatebyRange <- function(chrName, start_position, end_position){
   for(i in 1:length(pc)) {
     t_start <- all_genes_Info$transcript_start[pc[i]]
     t_end <- all_genes_Info$transcript_end[pc[i]]
-    t_seq <-getSeq(x = hs_seq, names = chr, start = t_start, end = t_end)
+    if(all_genes_Info$strand[pc[i]] == -1){
+      strand <- "-"
+    } else {
+      strand <- "+"
+    }
+    t_seq <-getSeq(x = hs_seq, names = chr,
+                   start = t_start, end = t_end, strand = strand)
     for (j in 1:length(snps)){
       snp_pos <- all_chr_snp@ranges@pos[snps[j]]
       if (snp_pos <= t_end && snp_pos >= t_start){
@@ -161,9 +172,11 @@ nsSNPCalculatebyRange <- function(chrName, start_position, end_position){
   for (i in 1:length(pc)){
     percent <- append (percent, sprintf("%0.4f", all_nssnps[i]/lengths[i]))
   }
+
   # Combine all results and calculate the percentage
   result <- data.frame(gene_Name, lengths, all_nssnps, percent)
 
   return(result)
 }
+
 # [END]

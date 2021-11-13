@@ -8,7 +8,7 @@ nsSNPCalculatebyRange(chrName, start_position, end_position)
 }
 \arguments{
 \item{chrName}{A integer value of class "numeric" indicating
-the human chromosome 1-22, or a char either in 'X'or 'Y' indicating
+the human chromosome 1-22, or a char either in 'X' or 'Y' indicating
 human sex chromosome.}
 
 \item{start_position}{A positive integer indicating the starting coordinate
@@ -20,7 +20,7 @@ of gene range.}
 \value{
 Returns a data frame object including the query and evaluated results
 \itemize{
-\item gene_Name - A value of class "charracter" indicating the gene name
+\item gene_Name - A value of class "character" indicating the gene name
 \item lengths - A value of integer indicating the transcript length
 \item all_nssnps - A value of class "numeric" indicating the nsSNP-involved
 locations over the transcript
@@ -34,7 +34,10 @@ percentage of positions could involve nsSNP of protein encoding range in
 given chromosome, gene range (start coordinate, end coordinate).
 }
 \examples{
-# Calculates percentage of nsSNPs in chromosome 1gene range 2321253 to 2391707
+# The used dataset of SNPs is default from SNPlocs.Hsapiens.dbSNP144.GRCh38 package
+# The used dataset of Human genome is default from BSgenome.Hsapiens.UCSC.hg38 package
+
+# Calculates percentage of nsSNPs in chromosome 1 gene range 2321253 to 2391707
 nsSNPResults <- nsSNPCalculatebyRange(
                           chrName = 1,
                           start_position = 2321253,

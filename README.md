@@ -47,8 +47,9 @@ distribution of SNPs within the certain gene region.
 The *nsSNPFreqPlot* function generates the plot similar as *SNPFreqPlot*
 but the targets are all nsSNPs within the gene.
 
-The *3Dpdb* function displays the encoded-protein 3D structure record in
-PBD or UniProt, and highlight the residue positions involved nsSNPs.
+The *displayPDB* function displays the encoded-protein 3D structure
+record in PBD or UniProt, and highlight the residue positions involved
+nsSNPs.
 
 ``` r
 browseVignettes("nsSNPfinder")
@@ -64,9 +65,12 @@ for collecting the genomic sequences and type of variants.
 `GENETIC_CODE` function in `Biostrings` package is used for compare the
 codon, which contributes to find potential nsSNPs.
 
-The *nsSNPFreqPlot* and *SNPFreqPlot* functions use of map function from
-`ggplot2` R package to generate frequency plots. The `bio3d` R package
-is used for generating 3D protein strucuture of the gene.
+The *nsSNPFreqPlot* and *SNPFreqPlot* functions use map function from
+`ggplot2` R package to generate frequency plots.
+
+The *displayPDB* function use the function from `prort` and model
+visualization function from `r3dmol` R packages to obtain the Uniprot
+recorded protein sequence and pdb file of structure modelling..
 
 ## Reference
 
@@ -88,6 +92,17 @@ Efficient manipulation of biological strings. R package version 2.62.0.
 
 Pagès, H. (2017). SNPlocs.Hsapiens.dbSNP144.GRCh38: SNP locations for
 Homo sapiens (dbSNPBuild 144). R package version 0.99.20.
+
+Su, W (2020). r3dmol: Create Interactive 3D Visualizations of Molecular
+Data. R package version 0.1.0. <https://github.com/swsoyee/r3dmol>
+
+Wickham, H. (2016). ggplot2: Elegant Graphics for Data Analysis.
+Springer-Verlag New York. ISBN 978-3-319-24277-4,
+<https://ggplot2.tidyverse.org>.
+
+Xiao, N., Cao, DS., Zhu, MF., Xu, QS. (2015). protr/ProtrWeb: R package
+and web server for generating various numerical representation schemes
+of protein sequences. *Bioinformatics* 31 (11), 1857-1859.
 
 ## Acknowledgements:
 
