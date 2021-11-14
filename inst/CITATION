@@ -1,0 +1,13 @@
+citHeader("To cite nsSNPfinder in publications use:")
+
+citEntry(
+  entry    = "Unpublished",
+  title    = "nsSNPfinder: an R package for integrating, analyzing, and visualizing the SNP data from the genomic level to the protein level.",
+  author   = "Y. Wang",
+  note  = "Unpublished",
+  year     = "2021",
+  url      = "https://github.com/Yuewei-Wang/nsSNPfinder.git",
+  textVersion = paste(
+
+  )
+)

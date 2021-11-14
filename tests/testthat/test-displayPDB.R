@@ -5,7 +5,7 @@ library(nsSNPfinder)
 test_that("invalid input1: incorrect chromosome name", {
   chrName = 'r'
   geneName = 'RHOA'
-  nsPos = 49395585
+  nsPos = 49395565
 
   expect_error(testresult <- displayPDB(chrName = chrName,
                                    geneName = geneName,
@@ -15,7 +15,7 @@ test_that("invalid input1: incorrect chromosome name", {
 test_that("invalid input2: incorrect gene name", {
   chrName = 'X'
   geneName = 'afalsename'
-  nsPos = 49395585
+  nsPos = 49395565
 
   expect_error(testresult <- displayPDB(chrName = chrName,
                                    geneName = geneName,
@@ -26,7 +26,7 @@ test_that("invalid input2: incorrect gene name", {
 test_that("invalid input3: incorrect choice for pdb ID", {
   chrName = 3
   geneName = 'RHOA'
-  nsPos = 49395585
+  nsPos = 49395565
   choice = 3
 
   expect_error(testresult <- displayPDB(chrName = chrName,

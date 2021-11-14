@@ -124,7 +124,7 @@ nsSNPCalculatebyRange <- function(chrName, start_position, end_position){
   # Filter the potential nsSNPs positions within input coordinates
   hs_seq <- BSgenome.Hsapiens.UCSC.hg38
   chr <- paste('chr',as.character(chrName),sep="")
-  all_nssnps <- c(0,0,0,0)
+  all_nssnps <- c()
   for(i in 1:length(pc)) {
     t_start <- all_genes_Info$transcript_start[pc[i]]
     t_end <- all_genes_Info$transcript_end[pc[i]]
@@ -135,6 +135,7 @@ nsSNPCalculatebyRange <- function(chrName, start_position, end_position){
     }
     t_seq <-getSeq(x = hs_seq, names = chr,
                    start = t_start, end = t_end, strand = strand)
+    acc <- 0
     for (j in 1:length(snps)){
       snp_pos <- all_chr_snp@ranges@pos[snps[j]]
       if (snp_pos <= t_end && snp_pos >= t_start){
@@ -160,11 +161,14 @@ nsSNPCalculatebyRange <- function(chrName, start_position, end_position){
           replaced_seq <- replace(t_seq, snp_pos-t_start, iupac[k])
           snp_codon <- paste0(replaced_seq[start:end], collapse = "")
           if (Biostrings::GENETIC_CODE[ori_codon] != Biostrings::GENETIC_CODE[snp_codon]){
-            all_nssnps[i] <- all_nssnps[i] + 1
+            acc <- acc + 1
             break
           }
         }
-      }
+        }
+    }
+    if (acc > 0){
+      all_nssnps <- c(all_nssnps, acc)
     }
   }
 

@@ -36,19 +36,19 @@ provide the protein structure.
 # The used dataset of SNPs is default from SNPlocs.Hsapiens.dbSNP144.GRCh38 package
 # The used dataset of Human genome is default from BSgenome.Hsapiens.UCSC.hg38 package
 
-# Display the 3D protein structure for RHOA in chromosome 3 at coordinate 49395585
+# Display the 3D protein structure for RHOA in chromosome 3 at coordinate 49395565
 
 # Example 1: default choice of pdb ID
 displayPDB(chrName = 3,
       geneName = 'RHOA',
-      nsPos = 49395585,
+      nsPos = 49395565,
       choice = 0)
 
 \dontrun{
 # Example 2: choose your own pdb ID
 structure <- displayPDB(chrName = 3,
                    geneName = 'RHOA',
-                   nsPos = 49395585,
+                   nsPos = 49395565,
                    choice = 1)
 # [1] "The available pdb structrues associated with your genes are:"
 # [1] "4D0N" "6BCA" "4XOI" "5JCP" "6BC0" "4XH9" "1XCG" "3KZ1" "3T06" "5JHG"

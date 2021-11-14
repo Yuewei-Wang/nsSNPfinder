@@ -24,19 +24,19 @@
 #' # The used dataset of SNPs is default from SNPlocs.Hsapiens.dbSNP144.GRCh38 package
 #' # The used dataset of Human genome is default from BSgenome.Hsapiens.UCSC.hg38 package
 #'
-#' # Display the 3D protein structure for RHOA in chromosome 3 at coordinate 49395585
+#' # Display the 3D protein structure for RHOA in chromosome 3 at coordinate 49395565
 #'
 #' # Example 1: default choice of pdb ID
 #' displayPDB(chrName = 3,
 #'       geneName = 'RHOA',
-#'       nsPos = 49395585,
+#'       nsPos = 49395565,
 #'       choice = 0)
 #'
 #' \dontrun{
 #' # Example 2: choose your own pdb ID
 #' structure <- displayPDB(chrName = 3,
 #'                    geneName = 'RHOA',
-#'                    nsPos = 49395585,
+#'                    nsPos = 49395565,
 #'                    choice = 1)
 #' # [1] "The available pdb structrues associated with your genes are:"
 #' # [1] "4D0N" "6BCA" "4XOI" "5JCP" "6BC0" "4XH9" "1XCG" "3KZ1" "3T06" "5JHG"
@@ -130,7 +130,6 @@ displayPDB <- function(chrName, geneName, nsPos, choice = 0){
                                   filters = c('chromosome_name','hgnc_symbol'),
                                   values = list(chrName, geneName),
                                   mart = hsapiens)
-  all_snp<-BSgenome::snpsBySeqname(SNPlocs.Hsapiens.dbSNP144.GRCh38, as.character(chrName))
 
   # choose the source of pdb structure
   pc <- c()
@@ -138,15 +137,17 @@ displayPDB <- function(chrName, geneName, nsPos, choice = 0){
   pdb_ids <- c()
   for (i in 1:nrow(all_genes_Info)){
     if (all_genes_Info$transcript_biotype[i] == 'protein_coding' &&
-        all_genes_Info$pdb[i] != ""){
+        all_genes_Info$pdb[i] != "" &&
+        all_genes_Info$transcript_start[i] <= nsPos &&
+        all_genes_Info$transcript_end[i] >= nsPos){
       pc <- c(pc, i)
       uniprot_ids <- c(uniprot_ids, all_genes_Info$uniprot_gn_id[i])
       pdb_ids <- c(pdb_ids, all_genes_Info$pdb[i])
     }
   }
   if (length(pc) == 0){
-    stop("no experimental structure of encoding protein in Uniprot or PDB,
-         please re-enter another gene")
+    stop("no experimental structure of encoding protein in Uniprot or PDB
+          associate with your input nsPos, please re-enter another gene.")
   }
 
   # List all available pdb IDs in PDB, for user to choose one structure to observe

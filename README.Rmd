@@ -47,7 +47,7 @@ The *nsSNPCalculatebyRange* function calculates the percentage of residues invol
 
 The *SNPFreqPlot* function generates the plot to indicate the position distribution of SNPs within the certain gene region.
 
-![](./inst/extdata/ExampleImage.png)
+![](./inst/extdata/overview.png)
 
 The *nsSNPFreqPlot* function generates the plot similar as *SNPFreqPlot* but the targets are all nsSNPs within the gene.
 
@@ -71,14 +71,16 @@ Durinck, S., Spellman, P., Birney, E.,& Huber, W. (2009). Mapping identifiers fo
 
 Durinck, S., Moreau, Y., Kasprzyk, A., Davis, S., De Moor, B., Brazma, A.,& Huber, W. (2005).BioMart and Bioconductor: a powerful link between biological databases and microarray data analysis.*Bioinformatics*, 21, 3439–3440.
 
-Grant, B.J., Rodrigues, A.P.C., ElSawy, K.M., McCammon, J.A.,& Caves, L.S.D. (2006). Bio3D: AnR package for the comparative analysis of protein structures. *Bioinformatics*, 22, 2695–2696.
-
 Pagès, H., Aboyoun, P., Gentleman, R., DebRoy, S. (2021). Biostrings: Efficient manipulation of biological strings. R package version 2.62.0.
 
 Pagès, H. (2017). SNPlocs.Hsapiens.dbSNP144.GRCh38: SNP locations for Homo sapiens (dbSNPBuild 144). R package version 0.99.20.
 
+Pagès, H. (2021). BSgenome: Software infrastructure for efficient representation of full genomes and their SNPs. R package version 1.62.0.
+
 Su, W (2020). r3dmol: Create Interactive 3D Visualizations of Molecular Data.
 R package version 0.1.0. https://github.com/swsoyee/r3dmol
+
+Team TBD (2021). BSgenome.Hsapiens.UCSC.hg38: Full genome sequences for Homo sapiens (UCSC version hg38, based on GRCh38.p13). R package version 1.4.4.
 
 Wickham, H. (2016). ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag
 New York. ISBN 978-3-319-24277-4, https://ggplot2.tidyverse.org.
