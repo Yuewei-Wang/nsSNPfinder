@@ -19,7 +19,7 @@ You can install the development version of nsSNPfinder from
 ``` r
 # install.packages("devtools")
 require("devtools")
-devtools::install_github("Yuewei-Wang/nsSNPfinder"，build_vignettes = TRUE)
+devtools::install_github("Yuewei-Wang/nsSNPfinder", build_vignettes = TRUE)
 library(nsSNPfinder)
 ```
 
@@ -29,7 +29,6 @@ To run the shinyApp: Under construction
 
 ``` r
 ls("package:nsSNPfinder")
-data(package = "nsSNPfinder") # optional
 ```
 
 nsSNPfinder contains 4 functions to demonstrate the nsSNP distribution
