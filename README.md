@@ -9,7 +9,8 @@
 nsSNPfinder is an R package for integrating, analyzing, and visualizing
 the SNP data from the genomic level to the protein level, finding
 potential nsSNP-associated gene marker that might cause the protein
-structure change.
+structure change. This package was developed using R version 4.1.1 and
+Mac platform.
 
 ## Installation
 

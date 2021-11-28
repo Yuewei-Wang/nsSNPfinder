@@ -1,6 +1,6 @@
 Package: nsSNPfinder
 Type: Package
-Title: nsSNP postion finder and visualization
+Title: nsSNP Postion Finder and Visualization
 Version: 0.1.0
 Author: person("Yuewei", "Wang", email="yuewei.wang@mail.utoronto.ca", role = c("aut", "cre"))
 Maintainer: Yuewei Wang <yuewei.wang@mail.utoronto.ca>
@@ -8,16 +8,22 @@ Description: Integrate, analyze, and visualize the SNP data from the genomic lev
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.1.0)
-Imports: 
+biocViews:
     Biostrings,
     biomaRt,
     BSgenome,
     SNPlocs.Hsapiens.dbSNP144.GRCh38,
-    BSgenome.Hsapiens.UCSC.hg38,
+    BSgenome.Hsapiens.UCSC.hg38
+Imports: 
     ggplot2,
     r3dmol,
     magrittr,
-    protr
+    protr,
+    Biostrings,
+    biomaRt,
+    BSgenome,
+    SNPlocs.Hsapiens.dbSNP144.GRCh38,
+    BSgenome.Hsapiens.UCSC.hg38
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
