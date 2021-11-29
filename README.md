@@ -111,3 +111,20 @@ of protein sequences. *Bioinformatics* 31 (11), 1857-1859.
 
 This package was developed as part of an assessment for 2021 BCB410H:
 Applied Bioinformatics, University of Toronto, Toronto, CANADA.
+
+## Q&A
+
+-   How to solve the *timeout error* in installation:
+
+Due to the size of data packages (BSgenome.Hsapiens.UCSC.hg38 and
+SNPlocs.Hsapiens.dbSNP144.GRCh38), sometimes the timeout error occurs in
+the process of installing packages. You can increase the timeout setting
+by:
+
+``` r
+library("utils")
+# set to 300s (5mins)
+options(timeout = 300)
+```
+
+to solve the error. Then running installation would work.
