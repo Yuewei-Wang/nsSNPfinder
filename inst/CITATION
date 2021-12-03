@@ -8,6 +8,6 @@ citEntry(
   year     = "2021",
   url      = "https://github.com/Yuewei-Wang/nsSNPfinder.git",
   textVersion = paste(
-
+"Wang, Y. (2021) nsSNPfinder: an R package for integrating, analyzing, and visualizing the SNP data from the genomic level to the protein level. URL: https://github.com/Yuewei-Wang/nsSNPfinder.git"
   )
 )

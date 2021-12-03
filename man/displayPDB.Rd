@@ -2,8 +2,7 @@
 % Please edit documentation in R/displayPDB.R
 \name{displayPDB}
 \alias{displayPDB}
-\title{Display the 3D protein structure that contains the residue could involves input
-nsSNP location in the input gene name}
+\title{Display the 3D protein structure and nsSNP-involved residue}
 \usage{
 displayPDB(chrName, geneName, nsPos, choice = 0)
 }

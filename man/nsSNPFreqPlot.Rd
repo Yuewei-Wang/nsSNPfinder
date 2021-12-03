@@ -5,17 +5,17 @@
 \title{Generate an overview plot for nsSNP locations versus number of nucleotide
 variants by gene range}
 \usage{
-nsSNPFreqPlot(chrName, start_position, end_position)
+nsSNPFreqPlot(chrName, startPosition, endPosition)
 }
 \arguments{
 \item{chrName}{A integer value of class "numeric" indicating
 the human chromosome 1-22, or a char either in 'X'or 'Y' indicating
 human sex chromosome.}
 
-\item{start_position}{A positive integer indicating the starting coordinate
+\item{startPosition}{A positive integer indicating the starting coordinate
 of gene range.}
 
-\item{end_position}{A positive integer indicating the end coordinate
+\item{endPosition}{A positive integer indicating the end coordinate
 of gene range.}
 }
 \value{
@@ -33,8 +33,8 @@ For better resolution, the genome range is limited within 200-nt length.
 
 # Generate the nsSNP locations in chromosome 1 in region of 2321253 to 2321353
 nsSNPPlot <- nsSNPFreqPlot(chrName = 1,
-                           start_position = 2321253,
-                           end_position = 2321353)
+                           startPosition = 2321253,
+                           endPosition = 2321353)
 nsSNPPlot
 
 }

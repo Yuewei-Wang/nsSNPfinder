@@ -1,5 +1,4 @@
-#' Display the 3D protein structure that contains the residue could involves input
-#' nsSNP location in the input gene name
+#' Display the 3D protein structure and nsSNP-involved residue
 #'
 #' A function that shows the 3D protein structure and points the potential nsSNP
 #' by query and integrate the information from bioMart, Uniprot and PDB. It
@@ -93,15 +92,15 @@
 displayPDB <- function(chrName, geneName, nsPos, choice = 0){
 
   # Checking arguments and the input range validation
-  num_chroms <- c(1:22)
-  chr_chroms <- c('X','Y')
-  if (typeof(chrName) == "character" && !chrName %in% chr_chroms) {
+  numChroms <- c(1:22)
+  chrChroms <- c('X','Y')
+  if (typeof(chrName) == "character" && !chrName %in% chrChroms) {
     stop("Please use integer between 1 to 22 to express the human chromosome
          name, or character 'X' or 'Y' as human sex chromosome.
          Please re-enter a valid input.")
   }
 
-  if (typeof(chrName) == "double" && !chrName %in% num_chroms){
+  if (typeof(chrName) == "double" && !chrName %in% numChroms){
     stop("The numeric input for human chromosome is between 1-22.
          Please re-enter a valid input.")
   }
@@ -121,9 +120,7 @@ displayPDB <- function(chrName, geneName, nsPos, choice = 0){
 
 
   # Set up appropriate mart for human genome from bioMart
-  hsapiens <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl")
-
-  all_genes_Info <-biomaRt::getBM(attributes = c("hgnc_symbol","ensembl_gene_id",
+  allGenesInfo <-biomaRt::getBM(attributes = c("hgnc_symbol","ensembl_gene_id",
                                                  "transcript_start","transcript_end",
                                                  "transcript_biotype",
                                                  "uniprot_gn_id","pdb","strand"),
@@ -133,16 +130,16 @@ displayPDB <- function(chrName, geneName, nsPos, choice = 0){
 
   # choose the source of pdb structure
   pc <- c()
-  uniprot_ids <- c()
-  pdb_ids <- c()
-  for (i in 1:nrow(all_genes_Info)){
-    if (all_genes_Info$transcript_biotype[i] == 'protein_coding' &&
-        all_genes_Info$pdb[i] != "" &&
-        all_genes_Info$transcript_start[i] <= nsPos &&
-        all_genes_Info$transcript_end[i] >= nsPos){
+  uniprotIDs <- c()
+  pdbIDs <- c()
+  for (i in 1:nrow(allGenesInfo)){
+    if (allGenesInfo$transcript_biotype[i] == 'protein_coding' &&
+        allGenesInfo$pdb[i] != "" &&
+        allGenesInfo$transcript_start[i] <= nsPos &&
+        allGenesInfo$transcript_end[i] >= nsPos){
       pc <- c(pc, i)
-      uniprot_ids <- c(uniprot_ids, all_genes_Info$uniprot_gn_id[i])
-      pdb_ids <- c(pdb_ids, all_genes_Info$pdb[i])
+      uniprotIDs <- c(uniprotIDs, allGenesInfo$uniprot_gn_id[i])
+      pdbIDs <- c(pdbIDs, allGenesInfo$pdb[i])
     }
   }
   if (length(pc) == 0){
@@ -153,56 +150,56 @@ displayPDB <- function(chrName, geneName, nsPos, choice = 0){
   # List all available pdb IDs in PDB, for user to choose one structure to observe
   # Check the choice and determine the pdb ID
   print("The available pdb structrues associated with your genes are:")
-  print(unique(pdb_ids))
+  print(unique(pdbIDs))
   if (choice == 1){
     input <- readline("please enter one ID to display \n")
     input <- toupper(input)
-    while (!(input %in% pdb_ids)){
-      print(unique(pdb_ids))
+    while (!(input %in% pdbIDs)){
+      print(unique(pdbIDs))
       input <- readline("your input is not in the displayed list,
                       please re-enter the choice.")
       input<-toupper(input)
     }
   } else {
-    input <- pdb_ids[1]
+    input <- pdbIDs[1]
   }
 
   # Find the residue position of nsPos
-  for (i in 1:nrow(all_genes_Info)){
-    if (all_genes_Info$pdb[i] == input){
+  for (i in 1:nrow(allGenesInfo)){
+    if (allGenesInfo$pdb[i] == input){
       idx <- i
       break
     }
   }
 
-  local_pos <- nsPos - all_genes_Info$transcript_start[idx]
-  hs_seq <- BSgenome.Hsapiens.UCSC.hg38
+  localPos <- nsPos - allGenesInfo$transcript_start[idx]
+  #hsapiensSeq <- BSgenome.Hsapiens.UCSC.hg38
   chr <- paste('chr',as.character(chrName),sep="")
-  if(all_genes_Info$strand[idx] == -1){
+  if(allGenesInfo$strand[idx] == -1){
     strand <- "-"
   } else {
     strand <- "+"
   }
-  ori_gene_seq <- getSeq(x = hs_seq, names = chr,
-                         start = all_genes_Info$transcript_start[idx],
-                         end = all_genes_Info$transcript_end[idx],
+  oriGeneSeq <- getSeq(x = hsapiensSeq, names = chr,
+                         start = allGenesInfo$transcript_start[idx],
+                         end = allGenesInfo$transcript_end[idx],
                          strand = strand)
 
-  pdb_seq <- getUniProt(all_genes_Info$uniprot_gn_id[idx])[[1]]
-  if (nchar(ori_gene_seq) %% 3 != 0){
-    ori_gene_seq <- ori_gene_seq[1:(nchar(ori_gene_seq)%/%3 * 3)]
+  pdbSeq <- getUniProt(allGenesInfo$uniprot_gn_id[idx])[[1]]
+  if (nchar(oriGeneSeq) %% 3 != 0){
+    oriGeneSeq <- oriGeneSeq[1:(nchar(oriGeneSeq)%/%3 * 3)]
   }
-  ori_aa_seq <- as.character(translate(ori_gene_seq))
-  nchar(ori_aa_seq)
-  nchar(pdb_seq)
-  if (grepl(substr(pdb_seq,1,5), ori_aa_seq, fixed = TRUE)){
-    first_aa_loc <- unlist(gregexpr(substr(pdb_seq,1,5), ori_aa_seq))[1]
-    loc_start <- all_genes_Info$transcript_start[idx] + first_aa_loc * 3
-    loc_end <- loc_start + nchar(pdb_seq) * 3
+  oriAASeq <- as.character(translate(oriGeneSeq))
+  nchar(oriAASeq)
+  nchar(pdbSeq)
+  if (grepl(substr(pdbSeq,1,5), oriAASeq, fixed = TRUE)){
+    firstAALoc <- unlist(gregexpr(substr(pdbSeq,1,5), oriAASeq))[1]
+    locStart <- allGenesInfo$transcript_start[idx] + firstAALoc * 3
+    locEnd <- locStart + nchar(pdbSeq) * 3
   }
 
-  if (nsPos <= loc_end && nsPos >= loc_start){
-    nssnp_loc_pos <- (nsPos - loc_start) %/% 3 + 1
+  if (nsPos <= locEnd && nsPos >= locStart){
+    nssnpLocPos <- (nsPos - locStart) %/% 3 + 1
   } else {
     stop('The input nsSNP position is not included in the selected PDB structure.')
   }
@@ -212,7 +209,7 @@ displayPDB <- function(chrName, geneName, nsPos, choice = 0){
   r3dmol() %>%
     m_add_model(data = m_fetch_pdb(input)) %>%
     m_set_style(style = m_style_cartoon(color = "cyan")) %>%
-    m_add_style(sel = m_sel(resi = nssnp_loc_pos),
+    m_add_style(sel = m_sel(resi = nssnpLocPos),
                 style = m_style_cartoon(color = "red")) %>%
     m_zoom_to() %>%
     m_spin()
