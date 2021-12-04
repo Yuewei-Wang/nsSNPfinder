@@ -23,7 +23,8 @@ Imports:
     biomaRt,
     BSgenome,
     SNPlocs.Hsapiens.dbSNP144.GRCh38,
-    BSgenome.Hsapiens.UCSC.hg38
+    BSgenome.Hsapiens.UCSC.hg38,
+    shiny
 Suggests: 
     testthat (>= 3.0.0),
     knitr,

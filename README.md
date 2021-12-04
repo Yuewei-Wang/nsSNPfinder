@@ -25,7 +25,11 @@ devtools::install_github("Yuewei-Wang/nsSNPfinder", build_vignettes = TRUE)
 library(nsSNPfinder)
 ```
 
-To run the shinyApp: Under construction
+To run the shinyApp:
+
+``` r
+runNSSNPfinder()
+```
 
 ## Overview
 

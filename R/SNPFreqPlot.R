@@ -20,10 +20,10 @@
 #' # The used dataset of SNPs is default from SNPlocs.Hsapiens.dbSNP144.GRCh38 package
 #' # The used dataset of Human genome is default from BSgenome.Hsapiens.UCSC.hg38 package
 #'
-#' # Generate the SNP locations in chromosome 1 in region of 2321253 to 2321453
-#' SNPFreqPlot(chrName = 1,
-#'            startPosition = 2321253,
-#'            endPosition = 2321453)
+#' # Generate the SNP locations in chromosome 3 in region of 49395438 to 49395450
+#' SNPFreqPlot(chrName = 3,
+#'            startPosition = 49395438,
+#'            endPosition = 49395566)
 #'
 #' @references
 #' Durinck, S., Spellman, P., Birney, E.,& Huber, W. (2009). Mapping identifiers
@@ -85,6 +85,9 @@ SNPFreqPlot <- function(chrName, startPosition, endPosition){
   allGenesInfo <-findGeneInfo(chrName, startPosition, endPosition)
   allChrSNP<-BSgenome::snpsBySeqname(SNPlocs.Hsapiens.dbSNP144.GRCh38,
                                      as.character(chrName))
+  if (nrow(allGenesInfo) == 0){
+    stop("no transcpits available for the input coordinates.")
+  }
 
   # Filter out the sequence that not encoding with protein or exceeds the range
   snps <- c()
@@ -148,7 +151,7 @@ SNPFreqPlot <- function(chrName, startPosition, endPosition){
   data <- data.frame(loc, numVars)
   plot<-ggplot(data = data,mapping = aes(x = loc, y = numVars),
                  color=numVars,fill=numVars) +
-    geom_col(alpha=0.25) +
+    geom_col(alpha=0.25, width = 2) +
     geom_text(aes(label = loc),angle = 60, vjust = 0.25,
               size = 2.5, colour = "black") +
     labs(x = "SNP location", y = "Count of different nts",

@@ -9,5 +9,5 @@ demoAllGenesInfo <-biomaRt::getBM(attributes = c("hgnc_symbol","ensembl_gene_id"
                                              "transcript_start","transcript_end",
                                              "transcript_biotype","strand"),
                               filters = c('chromosome_name','start','end'),
-                              values = list(1, 2321253, 2391707),
+                              values = list(3, 49395401, 49395500),
                               mart = hsapiens)

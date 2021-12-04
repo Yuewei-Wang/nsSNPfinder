@@ -37,10 +37,10 @@ given chromosome, gene range (start coordinate, end coordinate).
 # The used dataset of SNPs is default from SNPlocs.Hsapiens.dbSNP144.GRCh38 package
 # The used dataset of Human genome is default from BSgenome.Hsapiens.UCSC.hg38 package
 
-# Calculates percentage of nsSNPs in chromosome 1 gene range 2321253 to 2391707
-nsSNPCalculatebyRange(chrName = 1,
-                     startPosition = 2321253,
-                     endPosition = 2391707)
+# Calculates percentage of nsSNPs in chromosome 3 gene range 49359145 to 49411645
+nsSNPCalculatebyRange(chrName = 3,
+                     startPosition = 49359145,
+                     endPosition = 49411645)
 
 }
 \references{

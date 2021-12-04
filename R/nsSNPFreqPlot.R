@@ -20,11 +20,10 @@
 #' # The used dataset of SNPs is default from SNPlocs.Hsapiens.dbSNP144.GRCh38 package
 #' # The used dataset of Human genome is default from BSgenome.Hsapiens.UCSC.hg38 package
 #'
-#' # Generate the nsSNP locations in chromosome 1 in region of 2321253 to 2321353
-#' nsSNPPlot <- nsSNPFreqPlot(chrName = 1,
-#'                            startPosition = 2321253,
-#'                            endPosition = 2321353)
-#' nsSNPPlot
+#' # Generate the nsSNP locations in chromosome 3 in region of 49395439 to 49395566
+#' nsSNPFreqPlot(chrName = 3,
+#'               startPosition = 49395439,
+#'               endPosition = 49395566)
 #'
 #' @references
 #' Durinck, S., Spellman, P., Birney, E.,& Huber, W. (2009). Mapping identifiers
@@ -86,7 +85,9 @@ nsSNPFreqPlot <- function(chrName, startPosition, endPosition){
   allGenesInfo <-findGeneInfo(chrName, startPosition, endPosition)
   allChrSNP<-BSgenome::snpsBySeqname(SNPlocs.Hsapiens.dbSNP144.GRCh38,
                                      as.character(chrName))
-
+  if (nrow(allGenesInfo) == 0){
+    stop("no transcpits available for the input coordinates.")
+  }
   # Filter out the sequence that not encoding with protein
   snps <- c()
   for (i in 1:allChrSNP@elementMetadata@nrows){
@@ -129,6 +130,7 @@ nsSNPFreqPlot <- function(chrName, startPosition, endPosition){
   tEnd <- allGenesInfo$transcript_end[pc[curMax]]
   tSeq <-getSeq(x = hsapiensSeq, names = chr, start = tStart, end = tEnd)
   loc <- c()
+  snp <- c()
   numVars <- c()
   for (i in 1:length(snps)){
     pos <- allChrSNP@ranges@pos[snps[i]]
@@ -163,26 +165,25 @@ nsSNPFreqPlot <- function(chrName, startPosition, endPosition){
           acc <- acc + 1
         }
       }
-      numVars <- c(numVars, acc)
+      if (acc > 0){
+        numVars <- c(numVars, acc)
+      } else {
+        snp <- c(snp, i)
+      }
     }
   }
   # Check whether nsSNP present, if no any nsSNP, gives message to user
-  count <- 0
-  for (i in 1: length(numVars)){
-    if (numVars[i] > 0){
-      count <- count + 1
-    }
-  }
-  if (count == length(numVars)){
+  if (0 == length(numVars)){
     stop("no nsSNPs involvoed in the input range, you may re-define the range.")
   }
 
 
   # Fill the information into the plot
+  loc <- loc[-snp]
   data <- data.frame(loc, numVars)
-  plot<-ggplot(data = data,mapping = aes(x = loc, y = numVars),
+  plot<-ggplot(data = data, mapping = aes(x = loc, y = numVars),
                color=numVars,fill=numVars) +
-    geom_col(alpha=0.25) +
+    geom_col(alpha=0.25, width = 2) +
     geom_text(aes(label = loc),angle = 60, vjust = 0.25,
               size = 2.5, colour = "black") +
     labs(x = "nsSNP location", y = "Count of different nts",

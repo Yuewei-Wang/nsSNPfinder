@@ -31,11 +31,10 @@ For better resolution, the genome range is limited within 200-nt length.
 # The used dataset of SNPs is default from SNPlocs.Hsapiens.dbSNP144.GRCh38 package
 # The used dataset of Human genome is default from BSgenome.Hsapiens.UCSC.hg38 package
 
-# Generate the nsSNP locations in chromosome 1 in region of 2321253 to 2321353
-nsSNPPlot <- nsSNPFreqPlot(chrName = 1,
-                           startPosition = 2321253,
-                           endPosition = 2321353)
-nsSNPPlot
+# Generate the nsSNP locations in chromosome 3 in region of 49395439 to 49395566
+nsSNPFreqPlot(chrName = 3,
+              startPosition = 49395439,
+              endPosition = 49395566)
 
 }
 \references{

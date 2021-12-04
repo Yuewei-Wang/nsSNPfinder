@@ -46,29 +46,29 @@ There are 4 functions in the package:
 The __*nsSNPCalculatebyRange*__ allows users to input the chromosome name and gene range as arguments, then returns the summary for all transcripts within the input range, with information of gene name, transcript length, number of nsSNPs and the percentage of nsSNPs over the transcript. More information could be viewed in  `?nsSNPCalculatebyRange`.
 
 ```r
-> nsSNPCalculatebyRange(1, 2321253, 2391707)
-  gene_Name lengths all_nssnps percent
-1     MORN1   70302       3072  0.0437
-2     MORN1   36533       1521  0.0416
-3     MORN1   13485        686  0.0509
-4     MORN1    1993        119  0.0597
-> nsSNPCalculatebyRange(chrName = 2,start_position = 85394753,end_position = 85418432)
-  gene_Name lengths all_nssnps percent
-1      CAPG   15614        621  0.0398
-2      CAPG    3982        178  0.0447
-3      CAPG   15604        636  0.0408
-4      CAPG   19215        746  0.0388
-5      CAPG   19182        743  0.0387
-6      CAPG   10126        431  0.0426
-7      CAPG   11143        467  0.0419
-8      CAPG   15350        578  0.0377
-9      CAPG   19287        670  0.0347
+> nsSNPCalculatebyRange(chrName = 1, startPosition = 2321253, endPosition = 2391707)
+  geneName lengths nsSNPs percent
+1    MORN1   70302   3072  0.0437
+2    MORN1   36533   1521  0.0416
+3    MORN1   13485    686  0.0509
+4    MORN1    1993    119  0.0597
+> nsSNPCalculatebyRange(chrName = 2,startPosition = 85394753, endPosition = 85418432)
+  geneName lengths nsSNPs percent
+1     CAPG   15614    621  0.0398
+2     CAPG    3982    178  0.0447
+3     CAPG   15604    636  0.0408
+4     CAPG   19215    746  0.0388
+5     CAPG   19182    743  0.0387
+6     CAPG   10126    431  0.0426
+7     CAPG   11143    467  0.0419
+8     CAPG   15350    578  0.0377
+9     CAPG   19287    670  0.0347
 ```
 
 The __*SNPFreqPlot*__ allows users to input the chromosome name and gene range as arguments, then returns a plot to visualize the SNP locations versus the number of different nucleotide variants within input range. Each location is labeled with coordinate, more information could be viewed in `?SNPFreqPlot`.
 
 ```r
-> SNPFreqPlot(chrName = 1, start_position = 2321253, end_position = 2321453)
+> SNPFreqPlot(chrName = 3, startPosition = 49395430, endPosition = 49395600)
 ```
 <div style="text-align:center"><img src="SNPFreqPlotExample1.png" alt="SNPFreqPlotExample1" width="450"/>
 <div style="text-align:left">
@@ -79,7 +79,7 @@ The __*SNPFreqPlot*__ allows users to input the chromosome name and gene range a
 The __*nsSNPFreqPlot*__ has the similar function as __*SNPFreqPlot*__ but the targets are nsSNP instead. This function also requires chromosome name and gene range as arguments, then returns a plot for nsSNPs. More information could be viewed in `?nsSNPFreqPlot`.
 
 ```r
-> nsSNPFreqPlot(chrName = 1, start_position = 2321253, end_position = 2321453)
+> nsSNPFreqPlot(chrName = 3, startPosition = 49395430, endPosition = 49395600)
 ```
 <div style="text-align:center"><img src="nsSNPFreqPlotExample1.png" alt="nsSNPFreqPlotExample1" width="450"/>
 <div style="text-align:left">

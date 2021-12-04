@@ -26,10 +26,10 @@
 #' # The used dataset of SNPs is default from SNPlocs.Hsapiens.dbSNP144.GRCh38 package
 #' # The used dataset of Human genome is default from BSgenome.Hsapiens.UCSC.hg38 package
 #'
-#' # Calculates percentage of nsSNPs in chromosome 1 gene range 2321253 to 2391707
-#' nsSNPCalculatebyRange(chrName = 1,
-#'                      startPosition = 2321253,
-#'                      endPosition = 2391707)
+#' # Calculates percentage of nsSNPs in chromosome 3 gene range 49359145 to 49411645
+#' nsSNPCalculatebyRange(chrName = 3,
+#'                      startPosition = 49359145,
+#'                      endPosition = 49411645)
 #'
 #' @references
 #' Durinck, S., Spellman, P., Birney, E.,& Huber, W. (2009). Mapping identifiers
@@ -82,7 +82,9 @@ nsSNPCalculatebyRange <- function(chrName, startPosition, endPosition){
   allGenesInfo <-findGeneInfo(chrName, startPosition, endPosition)
   allChrSNP<-BSgenome::snpsBySeqname(SNPlocs.Hsapiens.dbSNP144.GRCh38,
                                      as.character(chrName))
-
+  if (nrow(allGenesInfo) == 0){
+    stop("no transcpits available for the input coordinates.")
+  }
   # Filter out the query results that are not within the input range
   snps <- c()
   for (i in 1:allChrSNP@elementMetadata@nrows){
@@ -185,7 +187,7 @@ nsSNPCalculatebyRange <- function(chrName, startPosition, endPosition){
 #' @import biomaRt
 findGeneInfo <- function(chrName, startPosition, endPosition) {
   # for saving the run-time, here preload the example bm
-  if (chrName == 1 && startPosition >= 2321253 && endPosition <= 2391707){
+  if (chrName == 3 && startPosition >= 49359145 && endPosition <= 49411645){
     return(demoAllGenesInfo)
   }
   bm <- biomaRt::getBM(attributes = c("hgnc_symbol","ensembl_gene_id",
