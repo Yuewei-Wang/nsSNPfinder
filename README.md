@@ -6,12 +6,14 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
+## Description
+
 nsSNPfinder is an R package for integrating, analyzing, and visualizing
 the SNP data from the genomic level to the protein level, finding
 potential nsSNP-associated gene marker that might cause the protein
-structure change. This package was developed using R version 4.1.1 and
-x86_64-apple-darwin17.0 (64-bit) platform runnning under macOS Monterey
-12.0.1.
+structure change. This package was developed using `R version 4.1.1` and
+`x86_64-apple-darwin17.0 (64-bit)` platform runnning under
+`macOS Monterey 12.0.1`.
 
 ## Installation
 

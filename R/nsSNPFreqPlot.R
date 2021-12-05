@@ -22,7 +22,7 @@
 #'
 #' # Generate the nsSNP locations in chromosome 3 in region of 49395439 to 49395566
 #' nsSNPFreqPlot(chrName = 3,
-#'               startPosition = 49395439,
+#'               startPosition = 49395520,
 #'               endPosition = 49395566)
 #'
 #' @references

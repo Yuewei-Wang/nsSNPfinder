@@ -22,7 +22,7 @@
 #'
 #' # Generate the SNP locations in chromosome 3 in region of 49395438 to 49395450
 #' SNPFreqPlot(chrName = 3,
-#'            startPosition = 49395438,
+#'            startPosition = 49395520,
 #'            endPosition = 49395566)
 #'
 #' @references
@@ -151,7 +151,7 @@ SNPFreqPlot <- function(chrName, startPosition, endPosition){
   data <- data.frame(loc, numVars)
   plot<-ggplot(data = data,mapping = aes(x = loc, y = numVars),
                  color=numVars,fill=numVars) +
-    geom_point(alpha=0.25) +
+    geom_col(alpha=0.25, width = 2) +
     geom_text(aes(label = loc),angle = 60, vjust = 0.25,
               size = 2.5, colour = "black") +
     labs(x = "SNP location", y = "Count of different nts",

@@ -33,7 +33,7 @@ For better resolution, the genome range is limited within 200-nt length.
 
 # Generate the SNP locations in chromosome 3 in region of 49395438 to 49395450
 SNPFreqPlot(chrName = 3,
-           startPosition = 49395438,
+           startPosition = 49395520,
            endPosition = 49395566)
 
 }
