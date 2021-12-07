@@ -87,12 +87,36 @@ The __*nsSNPFreqPlot*__ has the similar function as __*SNPFreqPlot*__ but the ta
 <br>
 
 <div style="text-align:left">
-The __*displayPDB*__ allows users to input gene name, chromosome name and specific nsSNP coordinate within the gene, then returns the 3D structure of the gene-encoded protein from PDB, also label the nsSNP-associated residue within the structure. More information could be viewed in `?displayPDB`.
+The __*displayPDB*__ allows users to input gene name, chromosome name and specific nsSNP coordinate within the gene, then returns the 3D structure of the gene-encoded protein from PDB, also label the nsSNP-associated residue within the structure. The default choice of PDB would be the first model. A list of involved PDB IDs would be printed along with the default model. Users would add additional 'choice' option to select their own interested PDBs. More information could be viewed in `?displayPDB`.
 
 ```r
+Demo of displaying default-choice model:
 > displayPDB(chrName = 3, geneName = 'RHOA',nsPos = 49395565)
+[1] "The available pdb structrues associated with your genes are:"
+ [1] "4D0N" "6BCA" "4XOI" "5JCP" "6BC0" "4XH9" "1XCG" "3KZ1" "3T06" "5JHG" "5JHH" "1X86"
+[13] "2RGN" "1CC0" "5ZHX" "5HPY" "1CXZ" "5C2K" "1OW3" "1TX4" "5M6X" "5M70" "6R3V" "3MSX"
+[25] "1A2B" "1DPF" "1FTN" "1KMQ" "1LB1" "1S1C" "3LW8" "3LWN" "3LXR" "4XSG" "4XSH" "5A0F"
+[37] "5BWM" "5C4M" "5EZ6" "5FR1" "5FR2" "5IRC" "6BCB" "6KX2" "6KX3"
 ```
 <div style="text-align:center"><img src="displayPDBExample.png" alt="displayPDBExample" width="450"/>
+<div style="text-align:left">
+
+<br>
+
+<div style="text-align:left">
+
+```r
+Select different models other than "4D0N":
+> displayPDB(chrName = 3, geneName = 'RHOA',nsPos = 49395565, choice = 1)
+[1] "The available pdb structrues associated with your genes are:"
+ [1] "4D0N" "6BCA" "4XOI" "5JCP" "6BC0" "4XH9" "1XCG" "3KZ1" "3T06" "5JHG" "5JHH" "1X86"
+[13] "2RGN" "1CC0" "5ZHX" "5HPY" "1CXZ" "5C2K" "1OW3" "1TX4" "5M6X" "5M70" "6R3V" "3MSX"
+[25] "1A2B" "1DPF" "1FTN" "1KMQ" "1LB1" "1S1C" "3LW8" "3LWN" "3LXR" "4XSG" "4XSH" "5A0F"
+[37] "5BWM" "5C4M" "5EZ6" "5FR1" "5FR2" "5IRC" "6BCB" "6KX2" "6KX3"
+>6KX3
+```
+
+<div style="text-align:center"><img src="displayPDBExample2.png" alt="displayPDBExample2" width="450"/>
 <div style="text-align:left">
 
 <br>
